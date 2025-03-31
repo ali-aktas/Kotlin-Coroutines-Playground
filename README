@@ -1,0 +1,32 @@
+# Kotlin Coroutines Masterclass
+
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.0-blue.svg)](https://kotlinlang.org/)
+[![Coroutines Version](https://img.shields.io/badge/Coroutines-1.7.3-orange.svg)](https://github.com/Kotlin/kotlinx.coroutines)
+
+A practical guide to mastering Kotlin Coroutines with real-world examples. Learn asynchronous programming concepts through hands-on exercises specifically designed for Android developers.
+
+## Features
+- Basic to advanced coroutine concepts
+- Practical examples with detailed explanations
+- Best practices for Android development
+- Common use cases and patterns
+- Performance optimization tips
+
+## What's Inside
+- Basic coroutine launching
+- Async/Await patterns
+- Coroutine scopes and contexts
+- Error handling strategies
+- Flow API examples
+- Channel communication
+- Android-specific implementations
+
+## Prerequisites
+- Basic knowledge of Kotlin
+- Android Studio (latest version)
+- Kotlin plugin installed
+
+## Getting Started
+1. Clone this repository
+```bash
+git clone https://github.com/<your-username>/kotlin-coroutines-masterclass.git
