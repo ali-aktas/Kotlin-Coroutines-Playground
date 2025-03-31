@@ -1,0 +1,176 @@
+## Basic Coroutine Launch
+
+import kotlinx.coroutines.*
+
+fun main() {
+    println("Main starts")
+    
+    // Launch a coroutine
+    GlobalScope.launch {
+        delay(1000L)
+        println("Coroutine completes!")
+    }
+    
+    Thread.sleep(2000L) // Keep JVM alive
+    println("Main ends")
+}
+
+
+----------------------------------------
+
+
+
+## Async/Await for Parallel Operations
+
+suspend fun fetchUserData(): String {
+    delay(1000L)
+    return "User data"
+}
+
+suspend fun fetchUserImage(): String {
+    delay(1500L)
+    return "User image"
+}
+
+fun main() = runBlocking {
+    val userData = async { fetchUserData() }
+    val userImage = async { fetchUserImage() }
+    
+    println("Loading...")
+    println("Data: ${userData.await()}, Image: ${userImage.await()}")
+}
+
+
+
+--------------------------------
+
+
+
+Key Concepts
+Coroutine Scope: Structured concurrency
+
+Dispatchers: Main, IO, Default
+
+Suspend Functions: Non-blocking operations
+
+Flows: Cold asynchronous streams
+
+Channels: Hot data streams
+
+Exception Handling: try/catch, CoroutineExceptionHandler
+
+Contributing
+Contributions are welcome! Please read the contribution guidelines before submitting a PR.
+
+Resources
+Official Coroutines Guide
+
+Android Developers Documentation
+
+Kotlin Coroutines Playlist
+
+
+Create a sample code structure in your Android project with these files:
+
+**1. BasicExample.kt**
+```kotlin
+package com.example.coroutines
+
+import kotlinx.coroutines.*
+
+class BasicExample {
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) = runBlocking {
+            println("Basic Coroutine Example")
+            
+            val job = launch {
+                delay(1000L)
+                println("World!")
+            }
+            
+            println("Hello,")
+            job.join()
+        }
+    }
+}
+
+
+-----------------------------------
+
+
+
+## AndroidNetworkExample.kt
+
+package com.example.coroutines
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
+
+class AndroidNetworkExample : ViewModel() {
+    
+    fun fetchData() {
+        viewModelScope.launch {
+            try {
+                val data = withContext(Dispatchers.IO) {
+                    // Simulate network call
+                    delay(2000L)
+                    "Data from network"
+                }
+                println("Received: $data")
+            } catch (e: Exception) {
+                println("Error: ${e.message}")
+            }
+        }
+    }
+}
+
+
+
+---------------------------------------------------
+
+
+
+## FlowExample.kt
+
+package com.example.coroutines
+
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+
+class FlowExample {
+    fun numberFlow(): Flow<Int> = flow {
+        for (i in 1..5) {
+            delay(500L)
+            emit(i)
+        }
+    }
+
+    suspend fun collectNumbers() {
+        numberFlow()
+            .filter { it % 2 == 0 }
+            .map { it * 2 }
+            .collect { println("Received: $it") }
+    }
+}
+
+fun main() = runBlocking {
+    val example = FlowExample()
+    example.collectNumbers()
+}
+
+
+
+-----------------------------------------------------
+
+
+Don't forget to add these dependencies in your build.gradle:
+
+dependencies {
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+}
